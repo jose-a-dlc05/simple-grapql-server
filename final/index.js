@@ -1,33 +1,17 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import { moviesData } from './movies.js';
-
-const typeDefs = `#graphql
-  type Movie {
-    id: ID
-		title: String!,
-		genre: [String]!,
-		releaseYear: Int!,
-		rating: Float!,
-		description: String!,
-		cast: [String]!,
-		director: [String]!,
-  }
-
-  type Query {
-    movies: [Movie]
-  }
-`;
-
-const resolvers = {
-	Query: {
-		movies: () => moviesData,
-	},
-};
+import { typeDefs } from './schema/schema.js';
+import { Query } from './resolvers/Query.js';
+import { Genre } from './resolvers/Genre.js';
+import { Movie } from './resolvers/Movie.js';
 
 const server = new ApolloServer({
 	typeDefs,
-	resolvers,
+	resolvers: {
+		Query,
+		Genre,
+		Movie,
+	},
 });
 
 const { url } = await startStandaloneServer(server, {

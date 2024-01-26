@@ -1,7 +1,7 @@
 import { genresData } from '../db/movies.js';
 
 export const Movie = {
-	genre: (parent, args, context) => {
+	genre: (parent, args) => {
 		const genreIds = parent.genreId.map((genre) => genre);
 		const genreNames = genreIds.map((genreId) => {
 			const isGenreInArray = genresData.find((genre) => genre.id === genreId);
